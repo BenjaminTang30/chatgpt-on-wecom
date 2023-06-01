@@ -18,45 +18,6 @@ from plugins import *
 
 # 定义指令集
 COMMANDS = {
-    "help": {
-        "alias": ["help", "帮助"],
-        "desc": "回复此帮助",
-    },
-    "helpp": {
-        "alias": ["help", "帮助"],  # 与help指令共用别名，根据参数数量区分
-        "args": ["插件名"],
-        "desc": "回复指定插件的详细帮助",
-    },
-    "auth": {
-        "alias": ["auth", "认证"],
-        "args": ["口令"],
-        "desc": "管理员认证",
-    },
-    "set_openai_api_key": {
-        "alias": ["set_openai_api_key"],
-        "args": ["api_key"],
-        "desc": "设置你的OpenAI私有api_key",
-    },
-    "reset_openai_api_key": {
-        "alias": ["reset_openai_api_key"],
-        "desc": "重置为默认的api_key",
-    },
-    "set_gpt_model": {
-        "alias": ["set_gpt_model"],
-        "desc": "设置你的私有模型",
-    },
-    "reset_gpt_model": {
-        "alias": ["reset_gpt_model"],
-        "desc": "重置你的私有模型",
-    },
-    "gpt_model": {
-        "alias": ["gpt_model"],
-        "desc": "查询你使用的模型",
-    },
-    "id": {
-        "alias": ["id", "用户"],
-        "desc": "获取用户id",  # wechaty和wechatmp的用户id不会变化，可用于绑定管理员
-    },
     "reset": {
         "alias": ["reset", "重置会话"],
         "desc": "重置会话",
@@ -64,69 +25,7 @@ COMMANDS = {
 }
 
 ADMIN_COMMANDS = {
-    "resume": {
-        "alias": ["resume", "恢复服务"],
-        "desc": "恢复服务",
-    },
-    "stop": {
-        "alias": ["stop", "暂停服务"],
-        "desc": "暂停服务",
-    },
-    "reconf": {
-        "alias": ["reconf", "重载配置"],
-        "desc": "重载配置(不包含插件配置)",
-    },
-    "resetall": {
-        "alias": ["resetall", "重置所有会话"],
-        "desc": "重置所有会话",
-    },
-    "scanp": {
-        "alias": ["scanp", "扫描插件"],
-        "desc": "扫描插件目录是否有新插件",
-    },
-    "plist": {
-        "alias": ["plist", "插件"],
-        "desc": "打印当前插件列表",
-    },
-    "setpri": {
-        "alias": ["setpri", "设置插件优先级"],
-        "args": ["插件名", "优先级"],
-        "desc": "设置指定插件的优先级，越大越优先",
-    },
-    "reloadp": {
-        "alias": ["reloadp", "重载插件"],
-        "args": ["插件名"],
-        "desc": "重载指定插件配置",
-    },
-    "enablep": {
-        "alias": ["enablep", "启用插件"],
-        "args": ["插件名"],
-        "desc": "启用指定插件",
-    },
-    "disablep": {
-        "alias": ["disablep", "禁用插件"],
-        "args": ["插件名"],
-        "desc": "禁用指定插件",
-    },
-    "installp": {
-        "alias": ["installp", "安装插件"],
-        "args": ["仓库地址或插件名"],
-        "desc": "安装指定插件",
-    },
-    "uninstallp": {
-        "alias": ["uninstallp", "卸载插件"],
-        "args": ["插件名"],
-        "desc": "卸载指定插件",
-    },
-    "updatep": {
-        "alias": ["updatep", "更新插件"],
-        "args": ["插件名"],
-        "desc": "更新指定插件",
-    },
-    "debug": {
-        "alias": ["debug", "调试模式", "DEBUG"],
-        "desc": "开启机器调试日志",
-    },
+   
 }
 
 
@@ -220,7 +119,7 @@ class Godcmd(Plugin):
             if len(content) == 1:
                 reply = Reply()
                 reply.type = ReplyType.ERROR
-                reply.content = f"空指令，输入#help查看指令列表\n"
+                reply.content = f"空指令"
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
                 return
@@ -402,7 +301,7 @@ class Godcmd(Plugin):
                 trigger_prefix = conf().get("plugin_trigger_prefix", "$")
                 if trigger_prefix == "#":  # 跟插件聊天指令前缀相同，继续递交
                     return
-                ok, result = False, f"未知指令：{cmd}\n查看指令列表请输入#help \n"
+                ok, result = False, f"未知指令"
 
             reply = Reply()
             if ok:
