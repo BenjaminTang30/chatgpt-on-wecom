@@ -25,7 +25,14 @@ COMMANDS = {
 }
 
 ADMIN_COMMANDS = {
-   
+    "resume": {
+        "alias": ["resume", "恢复服务"],
+        "desc": "恢复服务",
+    },
+    "stop": {
+        "alias": ["stop", "暂停服务"],
+        "desc": "暂停服务",
+    },
 }
 
 
@@ -119,7 +126,7 @@ class Godcmd(Plugin):
             if len(content) == 1:
                 reply = Reply()
                 reply.type = ReplyType.ERROR
-                reply.content = f"空指令"
+                reply.content = f"空指令\n"
                 e_context["reply"] = reply
                 e_context.action = EventAction.BREAK_PASS
                 return
@@ -296,12 +303,12 @@ class Godcmd(Plugin):
                                 ok, result = PluginManager().update_plugin(args[0])
                         logger.debug("[Godcmd] admin command: %s by %s" % (cmd, user))
                 else:
-                    ok, result = False, "需要管理员权限才能执行该指令"
+                    ok, result = False, "未知指令"
             else:
                 trigger_prefix = conf().get("plugin_trigger_prefix", "$")
                 if trigger_prefix == "#":  # 跟插件聊天指令前缀相同，继续递交
                     return
-                ok, result = False, f"未知指令"
+                ok, result = False, f"未知指令 \n"
 
             reply = Reply()
             if ok:
